@@ -52,7 +52,7 @@ export default{
 }
 .contato{
   display: flex;
-  width: 15%;
+  width: 18%;
 }
 .contato i{
   color: #25d366;
@@ -64,7 +64,7 @@ export default{
 .contato .meios-contatos{
   text-align: left;
   font-weight: 700;
-  font-size: .6rem;
+  font-size: .7rem;
   padding-top: 9px;
 }
 .meios-contatos span{
