@@ -26,7 +26,9 @@
       </div>
     </div>
     <transition name="slide-fade">
-    <Modal v-show="modal==true" @fechaModal="fechaModal"/>
+    <Modal v-show="modal==true"
+      :enabled="modal"
+      @fechaModal="fechaModal"/>
   </transition>
   </div>
 </template>

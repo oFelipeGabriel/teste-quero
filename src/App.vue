@@ -34,4 +34,7 @@ body{
   background-color: #FBFBFB;
   margin: 0;
 }
+.texto{
+color: #1F2D30
+}
 </style>

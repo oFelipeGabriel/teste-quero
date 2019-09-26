@@ -3,7 +3,8 @@
   <div class="como-funciona">
     <label>
       <i class="fas fa-info-circle"></i>
-      Como funciona
+      <span class="span-ajuda">Ajuda</span>
+      <span class="span-como-funciona">Como funciona</span>
     </label>
   </div>
   <div class="contato">
@@ -19,8 +20,9 @@
     <img src="../assets/logo-querobolsa.svg" alt="">
   </div>
   <div class="user">
-    <span>Nomo Sobrenome</span>
+    <span class="user-nome">Nomo Sobrenome</span>
     <i class="far fa-user-circle"></i>
+    <span class="user-conta">Conta</span>
   </div>
 </div>
 </template>
@@ -46,6 +48,9 @@ export default{
   border-right: 2px solid rgba(31, 45, 48,0.2);
   position: relative;
   width: 12%;
+}
+.span-ajuda{
+  display: none;
 }
 .como-funciona label{
   line-height: 50px;
@@ -89,5 +94,34 @@ export default{
 }
 .user i{
   font-size: 1.5rem;
+}
+@media only screen and (max-width: 600px) {
+  .span-como-funciona{
+    display: none;
+  }
+  .logo{
+    width: 70%;
+  }
+  .como-funciona i, .user i{
+    font-size: 1.8rem;
+  }
+  .user{
+    width: 15%;
+    border-left: 2px solid rgba(31, 45, 48,0.2);
+  }
+  .user i{
+    margin-right: 15px;
+  }
+  .span-ajuda, .user-conta{
+    display: block;
+    margin-top: -2rem;
+  }
+  .contato{
+    display: none;
+  }
+  .user-nome{
+    display: none;
+  }
+
 }
 </style>
