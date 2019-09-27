@@ -47,13 +47,17 @@ export default{
   vertical-align: middle;
   border-right: 2px solid rgba(31, 45, 48,0.2);
   position: relative;
-  width: 12%;
+  width: 14%;
+  font-weight: 700
 }
 .span-ajuda{
   display: none;
 }
 .como-funciona label{
   line-height: 50px;
+}
+.span-como-funciona{
+  margin-left: 5px;
 }
 .contato{
   display: flex;
@@ -95,6 +99,9 @@ export default{
 .user i{
   font-size: 1.5rem;
 }
+.user-conta{
+  display: none;
+}
 @media only screen and (max-width: 600px) {
   .span-como-funciona{
     display: none;
@@ -121,6 +128,9 @@ export default{
   }
   .user-nome{
     display: none;
+  }
+  .user-conta{
+    display: block;
   }
 
 }

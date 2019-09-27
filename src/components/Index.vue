@@ -39,7 +39,7 @@
 
       <span class="oferta-universidade">{{oferta['university']['name']}}</span>
       <span class="oferta-curso">{{oferta['course']['name']}}</span>
-      <span class="oferta-rate">{{oferta['university']['score']}}</span>
+      <Rate class="oferta-rate" :rate="oferta['university']['score']" />
       <span class="oferta-periodo">{{oferta['course']['kind']}} - {{oferta['course']['shift']}}</span>
       <span class="oferta-inicio">Inicio das aulas em: {{oferta['start_date']}}</span>
       <span class="oferta-mensalidade-label">Mensalidade com a Quero Bolsa: </span>
@@ -57,10 +57,12 @@
 
 <script>
 import Modal from './Modal.vue'
+import Rate from './Rate.vue'
 export default {
   name: 'Index',
   components: {
     Modal,
+    Rate
   },
   data(){
     return{
@@ -215,7 +217,7 @@ export default {
   font-weight: bolder;
 }
 .oferta-btns button{
-  margin: 25px 6px 5px 6px;
+  margin: 25px 5px 5px 5px;
   border-radius: 6px;
   padding: 13px 5px;
   font-weight: 700;

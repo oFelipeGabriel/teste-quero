@@ -180,7 +180,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .back-modal{
   position: absolute;
@@ -276,13 +275,16 @@ img{
 .checkbox-select{
   cursor: pointer;
   border: 1px solid #1F2D30;
-  background-color: #FBFBFB
+  background-color: #FBFBFB;
+
 }
 .checkbox-selected{
   cursor: pointer;
   color: #FBFBFB;
   background-color: #007A8D;
   border: 1px solid #FBFBFB;
+  padding: 4px 5px 2px;
+  width: auto;
 }
 .curso-nome{
   color: #007A8D;
