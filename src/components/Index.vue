@@ -28,8 +28,30 @@
     <transition name="slide-fade">
     <Modal v-show="modal==true"
       :enabled="modal"
-      @fechaModal="fechaModal"/>
+      @fechaModal="fechaModal"
+      @adicionaBolsas="adicionaBolsas"/>
   </transition>
+  <div class="ofertas">
+    <div class="card-oferta" v-for="oferta in bolsasSelecionadas">
+      <div class="img-oferta">
+          <img :src="require(`@/assets/${oferta.logo}.png`)" alt="">
+      </div>
+
+      <span class="oferta-universidade">{{oferta['university']['name']}}</span>
+      <span class="oferta-curso">{{oferta['course']['name']}}</span>
+      <span class="oferta-rate">{{oferta['university']['score']}}</span>
+      <span class="oferta-periodo">{{oferta['course']['kind']}} - {{oferta['course']['shift']}}</span>
+      <span class="oferta-inicio">Inicio das aulas em: {{oferta['start_date']}}</span>
+      <span class="oferta-mensalidade-label">Mensalidade com a Quero Bolsa: </span>
+      <span class="oferta-mensalidade-full-price">R$ {{String(oferta['full_price']).replace('.', ',')}}</span>
+      <span class="oferta-mensalidade-price"><span class="valor-oferta">R$ {{String(oferta['price_with_discount']).replace('.', ',')}}</span> /mês</span>
+      <div class="oferta-btns">
+        <button type="button" name="button" class="btn-excluir">Excluir</button>
+        <button type="button" name="button" class="btn-ver">Ver oferta</button>
+      </div>
+
+    </div>
+  </div>
   </div>
 </template>
 
@@ -43,9 +65,15 @@ export default {
   data(){
     return{
       modal: false,
+      bolsasSelecionadas: [],
     }
   },
   methods:{
+    adicionaBolsas(bolsas){
+      this.bolsasSelecionadas = bolsas;
+      console.log(this.bolsasSelecionadas);
+      this.modal = false;
+    },
     mostraModal(){
       this.modal = true;
     },
@@ -61,12 +89,12 @@ export default {
 .navbar{
   background-color: #007A8D;
   height: 50px;
+  display: flex;
 }
 .navbar ul{
   display: inline-flex;
   list-style: none;
   text-align: left;
-  width: 100%;
   color: #FBFBFB;
 }
 .navbar li{
@@ -143,5 +171,67 @@ export default {
 .slide-fade-enter, .slide-fade-leave-to{
   transform: translateY(-40px);
   opacity: 0;
+}
+.card-oferta{
+  margin: 1.5rem 5%;
+  box-shadow: 3px 3px 5px rgba(31, 45, 48, .22), -3px -3px 5px rgba(31, 45, 48, .22);
+  display: flex;
+  flex-direction: column;
+  padding: 2vh;
+}
+.img-oferta{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.card-oferta img{
+  max-width: 19vh;
+  max-height: 70px;
+}
+.oferta-universidade, .oferta-periodo, .oferta-rate, .oferta-mensalidade-label{
+  font-weight: 800;
+  margin-top: .6rem;
+}
+.oferta-curso{
+  font-weight: 800;
+  color: #007A8D;
+}
+.oferta-rate, .oferta-inicio{
+  padding-bottom: .6rem;
+  border-bottom: 2px solid #C9CDCE;
+  margin-bottom: .6rem;
+}
+.oferta-inicio{
+  margin-top: .6rem;
+}
+.oferta-mensalidade-full-price{
+  text-decoration: line-through;
+  display: block;
+  margin-top: .6rem;
+}
+.valor-oferta{
+  color: #0FA866;
+  font-size: 1.6rem;
+  font-weight: bolder;
+}
+.oferta-btns button{
+  margin: 25px 6px 5px 6px;
+  border-radius: 6px;
+  padding: 13px 5px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.btn-excluir{
+  width: 41%;
+  background-color: #FBFBFB;
+  border: 1px solid #18ACC4;
+  color: #18ACC4;
+}
+.btn-ver{
+  width: 51%;
+  background-color: #FDCB13;
+  border: 1px solid #DE9E1F;
+  color: #1F2D30;
 }
 </style>

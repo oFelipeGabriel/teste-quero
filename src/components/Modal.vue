@@ -41,6 +41,7 @@
           v-model="valor">
         </div>
         <!-- tabela de cursos -->
+        <div class="div-tabela">
         <table>
           <thead>
             <tr>
@@ -56,12 +57,15 @@
             <tr v-for="(bolsa, index) in bolsas">
               <td>
                 <!-- <input type="checkbox" name="" :value="index"> -->
-                <span v-if="!bolsa.selected" class="checkbox checkbox-select" @click="addBolsa(index)">
-                </span>
-                <span v-else class="checkbox checkbox-selected" @click="removeItem(index)">
-                  <i class="fas fa-check"></i>
-                </span>
-                <img :src="require(`@/assets/${bolsa.logo}.png`)" alt="">
+                <div class="div-check">
+                    <span v-if="!bolsa.selected" class="checkbox checkbox-select" @click="addBolsa(index)"></span>
+                    <span v-else class="checkbox checkbox-selected" @click="removeItem(index)">
+                      <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <div class="div-imagem">
+                    <img :src="require(`@/assets/${bolsa.logo}.png`)" alt="">
+                </div>
               </td>
               <td>
                 <span class="curso-nome">{{bolsa['course']['name']}}</span>
@@ -72,6 +76,20 @@
             </tr>
           </tbody>
         </table>
+      </div>
+        <div class="btns">
+          <button
+            type="button"
+            name="button"
+            id="btn_cancelar"
+            @click="fechaModal">Cancelar</button>
+          <button
+            type="button"
+            name="button"
+            id="btn_adicionar"
+            :class="classBtnAdd.class"
+            @click="adicionaBolsas">Adicionar bolsa(s)</button>
+        </div>
     </div>
   </div>
 </template>
@@ -89,9 +107,17 @@ export default {
       minValue: null,
       maxValue: null,
       valor: 0,
+      bolsasSelecionadas: [],
+      classBtnAdd: {
+        class: "btnAddInactive",
+        isActive: false,
+      },
     }
   },
   methods:{
+    adicionaBolsas(){
+      this.$emit('adicionaBolsas', this.bolsasSelecionadas);
+    },
     fechaModal(){
       this.$emit('fechaModal');
     },
@@ -126,9 +152,12 @@ export default {
     },
     addBolsa(item){
       this.bolsas[item].selected = true;
+      this.bolsasSelecionadas.push(this.bolsas[item])
     },
     removeItem(item){
       this.bolsas[item].selected = false;
+      let indice = this.bolsasSelecionadas.indexOf(item);
+      this.bolsasSelecionadas.splice(indice, 1);
     }
 
   },
@@ -138,6 +167,15 @@ export default {
         this.getData();
       }
     },
+    bolsasSelecionadas(){
+      if(this.bolsasSelecionadas.length>0){
+        this.classBtnAdd.class = "btnAddActive",
+        this.classBtnAdd.isActive = true;
+      }else{
+        this.classBtnAdd.class = "btnAddInactive";
+        this.classBtnAdd.isActive = false;
+      }
+    }
   }
 }
 </script>
@@ -161,7 +199,6 @@ export default {
   cursor: pointer;
 }
 .modal{
-  width: 100%;
   background-color: white;
   min-height: 90%;
   margin-top: 70px;
@@ -197,33 +234,47 @@ select option:checked, select option:focus{
   display: block;
   margin-bottom: .5rem;
 }
+.div-tabela{
+  display: flex;
+}
 table{
   width: 90%;
-  max-width: 500px;
-  margin: 0 5%;
+  flex: 1;
   border-spacing: 0px;
 }
 table.no-spacing {
-  border-spacing:0; /* Removes the cell spacing via CSS */
-  border-collapse: collapse;  /* Optional - if you don't want to have double border where cells touch */
+  border-spacing:0;
+  border-collapse: collapse;
 }
 table td{
+  position: relative;
   height: 2.5rem;
   border-bottom: 2px solid grey;
-  padding: .8rem 0;
+  padding: .8rem 10px;;
+}
+.div-imagem{
+  text-align: center;
 }
 img{
-  width: 60%;
-  margin-left: 1.2rem;
+  flex: 1;
+  max-width: 19vh;
+  max-height: 70px;
+  margin-left: 10vw;
+}
+.div-check{
+  position: absolute;
+  top: 30%;
 }
 .checkbox{
-  width: 20px;
+  width: 5px;
   height: 20px;
   border-radius: 6px;
+  position: absolute;
+  top: 1.3rem;
+  padding: 2px 10px;
 }
 .checkbox-select{
   cursor: pointer;
-  padding: 2px 10px;
   border: 1px solid #1F2D30;
   background-color: #FBFBFB
 }
@@ -232,7 +283,6 @@ img{
   color: #FBFBFB;
   background-color: #007A8D;
   border: 1px solid #FBFBFB;
-  padding: 3px 2.1px;
 }
 .curso-nome{
   color: #007A8D;
@@ -256,10 +306,40 @@ img{
   font-weight: 800;
   font-size: 1.2rem;
 }
+.btns{
+  display: flex;
+  margin-top: 10px;
+}
+.btns button{
+  margin: 6px;
+  border-radius: 6px;
+  padding: 13px 5px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+#btn_cancelar{
+  width: 41%;
+  background-color: #FBFBFB;
+  border: 1px solid #18ACC4;
+  color: #18ACC4;
+}
+.btnAddActive{
+  width: 58%;
+  background-color: #FDCB13;
+  border: 1px solid #DE9E1F;
+  color: #1F2D30;
+}
+.btnAddInactive{
+  width: 58%;
+  background-color: #C9CDCE;
+  border: 1px solid #7E8283;
+  color: #7E8283;
+}
 input[type=range] {
   -webkit-appearance: none;
   margin: 18px 0;
-  width: 40%;
+  width: 100%;
 }
 input[type=range]:focus {
   outline: none;
