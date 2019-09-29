@@ -109,17 +109,19 @@
   float: left;
   margin-right: 5px;
   line-height: 35px;
+  width: 100%;
 }
 .group{
   /*display: inline-flex;*/
-  display: inline-block;
-  width: 25%;
+  display: table;;
+  width: 33%;
   padding: 15px;
   border: 1px solid #18ACC4;
   margin-top: 1.2rem;
 }
 .groups{
   width: 100%;
+  display: flex;
 }
 .group-contato{
   display: inline-flex;
@@ -129,16 +131,22 @@
   margin: 0 auto;
   width: 50%;
   max-width: 180px;
+  display: flex;
 }
 .group-contato i{
   margin-right: 15px;
+  width: 10%;
 }
 .group-contato div{
     text-align: left;
 }
+.group-contato span{
+  text-align: left !important;
+}
 .secundario div div span{
   display: grid;
-  text-align: left;
+  text-align: center;
+  width: 100%;
 }
 /* .secundario .group:first-child{
   width: 100%;
@@ -148,9 +156,13 @@
 } */
 .group div:last-child{
   display: flex;
+  text-align: center;
+  width: 100%;
 }
 .group-icon{
   display: table;
+  width: 100%;
+  text-align: center;
 }
 .footer{
   color: #FBFBFB;

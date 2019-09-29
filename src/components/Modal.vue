@@ -6,7 +6,7 @@
       <span class="texto">Filtre e adicione as bolsas de seu interesse.</span>
       <div class="card cidade">
         <h4 class="texto">SELECIONE SUA CIDADE</h4>
-        <select class="select-cidade" name="cidade" @change="filtraCidade" v-model="filtros.cidade">
+        <select class="select-cidade" name="cidade" @change="changeCidade" v-model="filtros.cidade">
           <option value="null" disabled>Selecione</option>
           <option v-for="cidade in cidades" :value="cidade">{{cidade}}</option>
         </select>
@@ -152,6 +152,10 @@ export default {
     },
     fechaModal(){
       this.$emit('fechaModal');
+    },
+    changeCidade(){
+      this.filtros.curso = null;
+      this.filtrar();
     },
     filtraCidade(){
       if(this.filtros.cidade!=null){
