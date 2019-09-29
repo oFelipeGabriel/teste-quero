@@ -3,27 +3,27 @@
   <div class="div-rate">
     <span>{{rate}}</span>
     <div class="">
-      <i v-if="rate<2 && rate>1" class="fas fa-star-half-alt"></i>
+      <i v-if="rate<1 && rate>0" class="fas fa-star-half-alt"></i>
       <i v-else-if="rate>=1" class="fas fa-star"></i>
       <i v-else class="far fa-star"></i>
     </div>
     <div class="">
-      <i v-if="rate32 && rate>2" class="fas fa-star-half-alt"></i>
+      <i v-if="rate<2 && rate>3" class="fas fa-star-half-alt"></i>
       <i v-else-if="rate>=2" class="fas fa-star"></i>
       <i v-else class="far fa-star"></i>
     </div>
     <div class="">
-      <i v-if="rate<4 && rate>3" class="fas fa-star-half-alt"></i>
+      <i v-if="rate<3 && rate>2" class="fas fa-star-half-alt"></i>
       <i v-else-if="rate>=3" class="fas fa-star"></i>
       <i v-else class="far fa-star"></i>
     </div>
     <div class="">
-      <i v-if="rate<5 && rate>4" class="fas fa-star-half-alt"></i>
+      <i v-if="rate<4 && rate>3" class="fas fa-star-half-alt"></i>
       <i v-else-if="rate>=4" class="fas fa-star"></i>
       <i v-else class="far fa-star"></i>
     </div>
     <div class="">
-      <i v-if="rate>5" class="fas fa-star-half-alt"></i>
+      <i v-if="rate<5 && rate>4" class="fas fa-star-half-alt"></i>
       <i v-else-if="rate==5" class="fas fa-star"></i>
       <i v-else class="far fa-star"></i>
     </div>

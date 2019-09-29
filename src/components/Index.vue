@@ -6,8 +6,11 @@
         <li>Pré-matrículas</li>
         <li>Bolsas Favoritas</li>
       </ul>
+      <ul class="nav-menu">
+        <li>Menu <i class="fas fa-chevron-down"></i></li>
+      </ul>
     </div>
-    <div class="bolsas-favoritas">
+    <div ref="bolsasFav" id="bolsas-fav" class="bolsas-favoritas">
       <h2>Bolsas favoritas</h2>
       <p>Adicione bolsas de cursos e faculdades do seu interesse e receba atualizações com as melhores ofertas disponíveis.</p>
       <div class="center">
@@ -73,14 +76,15 @@ export default {
   methods:{
     adicionaBolsas(bolsas){
       this.bolsasSelecionadas = bolsas;
-      console.log(this.bolsasSelecionadas);
       this.modal = false;
+      this.$refs.bolsasFav.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     },
     mostraModal(){
       this.modal = true;
     },
     fechaModal(){
       this.modal = false;
+      this.$refs.bolsasFav.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     }
   }
 }
@@ -93,16 +97,29 @@ export default {
   height: 50px;
   display: flex;
 }
-.navbar ul{
+.navbar ul, .nav-menu{
   display: inline-flex;
   list-style: none;
   text-align: left;
   color: #FBFBFB;
+  padding-left: 0.5rem;
+  width: 50%;
 }
 .navbar li{
   margin: 0 10px;
   cursor: pointer;
   font-weight: 600;
+  display: none;
+}
+.navbar li:first-child{
+  display: block;
+}
+.nav-menu{
+  position: relative;
+}
+.nav-menu li:first-child{
+  position: absolute;
+  right: 0.5rem;
 }
 .bolsas-favoritas{
   min-height:400px

@@ -6,39 +6,56 @@
       <span class="texto">Filtre e adicione as bolsas de seu interesse.</span>
       <div class="card cidade">
         <h4 class="texto">SELECIONE SUA CIDADE</h4>
-        <select class="select-cidade" name="cidade">
-          <option value="" selected disabled>Selecione</option>
-          <option v-for="(cidade, index) in cidades" :value="index">{{cidade}}</option>
+        <select class="select-cidade" name="cidade" @change="filtraCidade" v-model="filtros.cidade">
+          <option value="null" disabled>Selecione</option>
+          <option v-for="(cidade, index) in cidades" :value="cidade">{{cidade}}</option>
         </select>
       </div>
       <div class="card curso">
         <h4 class="texto">SELECIONE O CURSO DE SUA PREFERÊNCIA</h4>
-        <select class="select-curso" name="curso">
-          <option value="" selected disabled>Selecione</option>
-          <option v-for="(curso, index) in cursos" :value="index">{{curso}}</option>
+        <select class="select-curso" name="curso" @change="filtraCursos" v-model="filtros.curso">
+          <option value="null" disabled>Selecione</option>
+          <option v-for="(curso, index) in cursos" :value="curso">{{curso}}</option>
         </select>
       </div>
       <div class="card como-estudar">
         <h4 class="texto">COMO VOCÊ QUER ESTUDAR:</h4>
-        <div class="group-chek">
-          <input type="checkbox" name="" value="" id="presencial">
-          <label for="presencial">Presencial</label>
+        <div class="div-group-check">
+          <div class="group-chek">
+            <input type="checkbox" name="" value="" id="presencial" v-model="filtros.comoEstudar.presencial">
+            <div class="checkbox-type">
+              <span v-if="!filtros.comoEstudar.presencial" class="checkbox checkbox-select" @click="addType('presencial')"></span>
+              <span v-else class="checkbox checkbox-selected" @click="addType('presencial')">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
+            <label for="presencial">Presencial</label>
+          </div>
+          <div>
+            <input type="checkbox" name="" value="" id="distancia" v-model="filtros.comoEstudar.distancia">
+            <div class="checkbox-type">
+              <span v-if="!filtros.comoEstudar.distancia"  class="checkbox checkbox-select" @click="addType('distancia')"></span>
+              <span v-else class="checkbox checkbox-selected" @click="addType('distancia')">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
+
+            <label for="distancia">A distância</label>
+          </div>
         </div>
-        <div class="group-chek">
-          <input type="checkbox" name="" value="" id="distancia">
-          <label for="distancia">A distância</label>
-        </div>
+
       </div>
         <div class="card pagar">
         <h4 class="texto">ATÉ QUANTO PODE PAGAR?</h4>
-        <label for="id_valor">R${{valor}}</label>
+        <label for="id_valor">R$ {{parseFloat(filtros.valor).toFixed(2).replace('.', ',')}}</label>
         <input
           id="id_valor"
           type="range"
           step="0.01"
           :min="minValue"
           :max="maxValue"
-          v-model="valor">
+          v-model="filtros.valor"
+          @change="filtrar">
         </div>
         <!-- tabela de cursos -->
         <div class="div-tabela">
@@ -52,9 +69,9 @@
           <tbody>
             <tr>
               <td></td>
-              <td class="text-right">Nome da Faculdade <i class="fas fa-chevron-down"></i></td>
+              <td class="text-right nome-faculdade-filter" @click="ordenaNome">Nome da Faculdade <i class="fas fa-chevron-down"></i></td>
             </tr>
-            <tr v-for="(bolsa, index) in bolsas">
+            <tr v-for="(bolsa, index) in bolsasFilter">
               <td>
                 <!-- <input type="checkbox" name="" :value="index"> -->
                 <div class="div-check">
@@ -71,7 +88,7 @@
                 <span class="curso-nome">{{bolsa['course']['name']}}</span>
                 <span class="curso-level">{{bolsa['course']['level']}}</span>
                 <span class="desconto">Bolsa de <span class="valor-desconto">{{bolsa['discount_percentage']}}%</span></span>
-                <span class="curso-valor">R$ {{bolsa['full_price'].toFixed(2).replace('.', ',')}}/mês</span>
+                <span class="curso-valor">R$ {{bolsa['price_with_discount'].toFixed(2).replace('.', ',')}}/mês</span>
               </td>
             </tr>
           </tbody>
@@ -101,12 +118,21 @@ export default {
   props: ['enabled'],
   data(){
     return{
+      filtros:{
+        cidade: null,
+        curso: null,
+        comoEstudar: {
+          presencial: true,
+          distancia: true,
+        },
+        valor: 0,
+      },
       cidades: [],
       cursos: [],
       bolsas: [],
+      bolsasFilter: [],
       minValue: null,
       maxValue: null,
-      valor: 0,
       bolsasSelecionadas: [],
       classBtnAdd: {
         class: "btnAddInactive",
@@ -116,10 +142,65 @@ export default {
   },
   methods:{
     adicionaBolsas(){
-      this.$emit('adicionaBolsas', this.bolsasSelecionadas);
+      if(this.bolsasSelecionadas.length>0){
+          this.$emit('adicionaBolsas', this.bolsasSelecionadas);
+      }
+    },
+    addType(type){
+      this.filtros.comoEstudar[type] = !this.filtros.comoEstudar[type];
+      this.filtrar();
     },
     fechaModal(){
       this.$emit('fechaModal');
+    },
+    filtraCidade(){
+      if(this.filtros.cidade!=null){
+        this.cursos = [];
+        for(let x=0;x<this.bolsasFilter.length;x++){
+          if(this.bolsasFilter[x]['campus']['city'] == this.filtros.cidade){
+            this.bolsasFilter.push(this.bolsas[x])
+            this.cursos.push(this.bolsasFilter[x]['course']['name'])
+          }
+        }
+      }
+    },
+    filtraCursos(){
+      let c = this.bolsasFilter;
+      let app = this;
+      if(this.filtros.curso!=null){
+        var a = c.filter(function(item, index){
+          return item['course']['name'] == app.filtros.curso;
+        })
+        this.bolsasFilter = a;
+      }
+    },
+    filtraTipo(){
+      let app = this;
+      this.bolsasFilter = this.bolsas.filter(function(item, index){
+        if(
+          item['course']['kind'] == "Presencial" && app.filtros.comoEstudar.presencial == true
+        ){
+          return item
+        }else if(
+          item['course']['kind'] == "EaD" && app.filtros.comoEstudar.distancia == true
+        ){
+          return item
+        }
+      })
+    },
+    filtraValor(){
+      let app = this;
+      if(this.filtros.valor>0){
+        this.bolsasFilter = this.bolsasFilter.filter(function(item, index){
+          return item['price_with_discount'] <= app.filtros.valor;
+        })
+      }
+    },
+    filtrar(){
+      this.filtraTipo();
+      this.filtraCidade();
+      this.filtraCursos();
+      this.filtraValor();
     },
     getData(){
       let app = this;
@@ -134,7 +215,6 @@ export default {
           if(!app.cidades.includes(cidade)){
             app.cidades.push(cidade)
           }
-
           let curso = data[x]['course']['name'];
           if(!app.cursos.includes(curso)){
             app.cursos.push(curso)
@@ -148,6 +228,7 @@ export default {
             app.maxValue = parseFloat(data[x]['price_with_discount']).toFixed(2)
           }
         }
+        app.bolsasFilter = app.bolsas;
       })
     },
     addBolsa(item){
@@ -158,7 +239,16 @@ export default {
       this.bolsas[item].selected = false;
       let indice = this.bolsasSelecionadas.indexOf(item);
       this.bolsasSelecionadas.splice(indice, 1);
-    }
+    },
+    ordenaNome(){
+      this.bolsasFilter.sort(function(a, b){
+          if(a['university']['name'] > b['university']['name']){
+            return 1
+          }else{
+            return -1
+          }
+        });
+    },
 
   },
   watch:{
@@ -202,7 +292,7 @@ export default {
   min-height: 90%;
   margin-top: 70px;
   text-align: left;
-  padding: 10px 5%;
+  padding: 10px 1rem;
   overflow: auto;
 }
 .text-right{
@@ -233,6 +323,30 @@ select option:checked, select option:focus{
   display: block;
   margin-bottom: .5rem;
 }
+.div-group-check{
+  display: flex;
+  margin-top: 1rem;
+}
+.div-group-check label{
+  margin: 0 0.8rem;
+  font-size: 1.3rem;
+}
+.group-check{
+  margin-right: .5rem;
+}
+.checkbox-type{
+  position: relative;
+  float: left;
+  flex: 1;
+}
+.checkbox-type .checkbox{
+  position: absolute;
+  padding: 2px 10px;
+  width: 2px;
+  height: 16px;
+  border-radius: 6px;
+}
+
 .div-tabela{
   display: flex;
 }
@@ -240,6 +354,7 @@ table{
   width: 90%;
   flex: 1;
   border-spacing: 0px;
+  margin-top: 1rem;
 }
 table.no-spacing {
   border-spacing:0;
@@ -248,8 +363,15 @@ table.no-spacing {
 table td{
   position: relative;
   height: 2.5rem;
-  border-bottom: 2px solid grey;
-  padding: .8rem 10px;;
+  border-bottom: 2px solid #C9CDCE;
+  padding: .8rem .5rem;
+}
+table td:first-child, .nome-faculdade-filter{
+  padding: 0
+}
+.nome-faculdade-filter{
+  color: #007A8D;
+  font-weight: 600;
 }
 .div-imagem{
   text-align: center;
@@ -264,10 +386,12 @@ img{
   position: absolute;
   top: 30%;
 }
-.checkbox{
+table .checkbox{
   width: 5px;
   height: 20px;
   border-radius: 6px;
+}
+table .checkbox{
   position: absolute;
   top: 1.3rem;
   padding: 2px 10px;
@@ -276,15 +400,19 @@ img{
   cursor: pointer;
   border: 1px solid #1F2D30;
   background-color: #FBFBFB;
-
 }
-.checkbox-selected{
+table .checkbox-selected, .div-group-check .checkbox-selected{
   cursor: pointer;
   color: #FBFBFB;
   background-color: #007A8D;
   border: 1px solid #FBFBFB;
-  padding: 4px 5px 2px;
   width: auto;
+}
+table .checkbox-selected{
+  padding: 4px 5px 2px;
+}
+.checkbox-type .checkbox-selected{
+  padding: 3px 4px;
 }
 .curso-nome{
   color: #007A8D;
