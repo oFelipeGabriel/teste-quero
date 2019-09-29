@@ -71,7 +71,7 @@
               <td></td>
               <td class="text-right nome-faculdade-filter" @click="ordenaNome">Nome da Faculdade <i class="fas fa-chevron-down"></i></td>
             </tr>
-            <tr v-for="bolsa in bolsasFilter">
+            <tr v-for="(bolsa, index) in bolsasFilter">
               <td>
                 <!-- <input type="checkbox" name="" :value="index"> -->
                 <div class="div-check">
@@ -241,8 +241,8 @@ export default {
       })
     },
     addBolsa(item){
-      this.bolsas[item].selected = true;
-      this.bolsasSelecionadas.push(this.bolsas[item])
+      this.bolsasFilter[item].selected = true;
+      this.bolsasSelecionadas.push(this.bolsasFilter[item])
     },
     removeItem(item){
       this.bolsas[item].selected = false;
@@ -303,6 +303,7 @@ export default {
   text-align: left;
   padding: 10px 1rem;
   overflow: auto;
+  z-index: 999;
 }
 .text-right{
   text-align: right;

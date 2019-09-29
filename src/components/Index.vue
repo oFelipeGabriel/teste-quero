@@ -1,13 +1,22 @@
 <template>
   <div class="wrapper">
     <div class="navbar">
-      <ul>
+      <ul class="navbar-links">
         <li>Minha Conta</li>
         <li>Pré-matrículas</li>
-        <li>Bolsas Favoritas</li>
+        <li class="active">Bolsas Favoritas</li>
       </ul>
       <ul class="nav-menu">
         <li>Menu <i class="fas fa-chevron-down"></i></li>
+      </ul>
+    </div>
+    <div class="breadcrumbs">
+      <ul>
+        <li class="link">Home</li>
+        <li class="separator"> / </li>
+        <li class="link">Minha conta</li>
+        <li class="separator"> / </li>
+        <li class="active">Bolsas favoritas</li>
       </ul>
     </div>
     <div ref="bolsasFav" id="bolsas-fav" class="bolsas-favoritas">
@@ -22,19 +31,20 @@
       </ul>
     </div>
     </div>
+  </div>
+
+  <div class="cards">
       <div class="btn-adicionar" @click="mostraModal">
         <span class="btn-plus"><i class="fas fa-plus-circle"></i></span>
         <h4>Adicionar bolsa</h4>
         <span>Clique para adicionar bolsas de cursos do seu interesse</span>
       </div>
-    </div>
-    <transition name="slide-fade">
+        <transition name="slide-fade">
     <Modal v-show="modal==true"
       :enabled="modal"
       @fechaModal="fechaModal"
       @adicionaBolsas="adicionaBolsas"/>
   </transition>
-  <div class="ofertas">
     <div class="card-oferta" v-for="oferta in bolsasFilter">
       <div class="img-oferta">
           <img :src="require(`@/assets/${oferta.logo}.png`)" alt="">
@@ -54,7 +64,7 @@
       </div>
 
     </div>
-  </div>
+</div>
   </div>
 </template>
 
@@ -117,9 +127,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .navbar{
-  background-color: #007A8D;
+  background-color: #18ACC4;
   height: 50px;
   display: flex;
+}
+.navbar-links{
+  height: 100%;
+  margin-top: 0 !important;
+  line-height: 50px;
+}
+.navbar-links .active{
+  background-color: #007A8D;
 }
 .navbar ul, .nav-menu{
   display: inline-flex;
@@ -144,6 +162,9 @@ export default {
 .nav-menu li:first-child{
   position: absolute;
   right: 0.5rem;
+}
+.breadcrumbs{
+  display: none;
 }
 .bolsas-favoritas{
   min-height:400px
@@ -276,5 +297,26 @@ export default {
   background-color: #FDCB13;
   border: 1px solid #DE9E1F;
   color: #1F2D30;
+}
+
+/* desktop */
+@media only screen and (min-width: 900px) {
+  .nav-menu{ display: none !important;}
+  .navbar li { display: block; padding: 0 15px; font-size: .8rem;font-weight: 700}
+  .breadcrumbs{ position: relative; }
+  .breadcrumbs ul{ position: absolute; left: 0; display: inline-flex; list-style: none; width: 40%; font-size: .8rem; }
+  .breadcrumbs .separator{ margin: 0 10px; color: #2c3e50;}
+  .breadcrumbs .link{ color: #18acc4; font-weight: 700; cursor: pointer; }
+  .breadcrumbs .active{ color: #2c3e50; }
+  .bolsas-favoritas{ min-height: 0 }
+  .lista-semestre{ display: flex; justify-content: flex-end;}
+  .lista-semestre li:first-child{ border-radius: 6px 0 0 6px}
+  .lista-semestre li:last-child{ border-radius: 0 6px 6px 0}
+  .lista-semestre li{ padding: .4rem 1.2rem; font-size: .8rem;}
+  .btn-adicionar{ width: 280px; height: 200px; padding: 70px 0; float: left; margin: 10px; }
+  .btn-adicionar h4{font-size: 1.2rem;}
+  .btn-adicionar span{ font-size: .8rem; }
+  .cards{ display: table; padding: 0 3%;}
+  .cards .card-oferta{float:left;margin: 10px}
 }
 </style>

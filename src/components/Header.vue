@@ -102,7 +102,14 @@ export default{
 .user-conta{
   display: none;
 }
+@media only screen and (min-width: 900px){
+  .como-funciona{
+    width: 18%;
+    min-width: 150px !important;
+  }
+}
 @media only screen and (max-width: 600px) {
+
   .span-como-funciona{
     display: none;
   }

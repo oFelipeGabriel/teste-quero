@@ -58,7 +58,6 @@ export default {
 }
 .div-rate{
   flex: 1;
-  position: relative;
 }
 .div-rate span, .div-rate i, .div-rate div{
   font-size: 1.3rem;
