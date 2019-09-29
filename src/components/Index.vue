@@ -16,9 +16,9 @@
       <div class="center">
         <div class="lista">
       <ul class="lista-semestre">
-        <li class="active">Todos os semestres</li>
-        <li>2º semestre de 2019</li>
-        <li>1º semestres de 2020</li>
+        <li :class="activeItem['0']" @click="filtraSemestre('all', '0')">Todos os semestres</li>
+        <li :class="activeItem['1']" @click="filtraSemestre('2019.2', '1')">2º semestre de 2019</li>
+        <li :class="activeItem['2']" @click="filtraSemestre('2020.1', '2')">1º semestres de 2020</li>
       </ul>
     </div>
     </div>
@@ -35,7 +35,7 @@
       @adicionaBolsas="adicionaBolsas"/>
   </transition>
   <div class="ofertas">
-    <div class="card-oferta" v-for="oferta in bolsasSelecionadas">
+    <div class="card-oferta" v-for="oferta in bolsasFilter">
       <div class="img-oferta">
           <img :src="require(`@/assets/${oferta.logo}.png`)" alt="">
       </div>
@@ -71,12 +71,20 @@ export default {
     return{
       modal: false,
       bolsasSelecionadas: [],
+      bolsasFilter: [],
+      activeItem:{
+        '0': "active",
+        '1': "",
+        '2': ""
+      }
     }
   },
   methods:{
     adicionaBolsas(bolsas){
       this.bolsasSelecionadas = bolsas;
+      this.bolsasFilter = bolsas;
       this.modal = false;
+      this.mudaClasse('0');
       this.$refs.bolsasFav.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
     },
     mostraModal(){
@@ -85,6 +93,22 @@ export default {
     fechaModal(){
       this.modal = false;
       this.$refs.bolsasFav.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    },
+    filtraSemestre(sem, item){
+      if(sem=='all'){
+        this.bolsasFilter = this.bolsasSelecionadas
+      }else{
+        this.bolsasFilter = this.bolsasSelecionadas.filter(function(item){
+          return item['enrollment_semester'] == sem
+        })
+      };
+      this.mudaClasse(item)
+    },
+    mudaClasse(i){
+      for (let x in this.activeItem){
+        this.activeItem[x] = ""
+      };
+      this.activeItem[i] = "active"
     }
   }
 }

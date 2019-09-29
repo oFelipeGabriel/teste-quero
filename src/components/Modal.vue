@@ -8,14 +8,14 @@
         <h4 class="texto">SELECIONE SUA CIDADE</h4>
         <select class="select-cidade" name="cidade" @change="filtraCidade" v-model="filtros.cidade">
           <option value="null" disabled>Selecione</option>
-          <option v-for="(cidade, index) in cidades" :value="cidade">{{cidade}}</option>
+          <option v-for="cidade in cidades" :value="cidade">{{cidade}}</option>
         </select>
       </div>
       <div class="card curso">
         <h4 class="texto">SELECIONE O CURSO DE SUA PREFERÊNCIA</h4>
-        <select class="select-curso" name="curso" @change="filtraCursos" v-model="filtros.curso">
+        <select class="select-curso" name="curso" @change="filtrar" v-model="filtros.curso">
           <option value="null" disabled>Selecione</option>
-          <option v-for="(curso, index) in cursos" :value="curso">{{curso}}</option>
+          <option v-for="(curso) in cursos" :value="curso">{{curso}}</option>
         </select>
       </div>
       <div class="card como-estudar">
@@ -71,7 +71,7 @@
               <td></td>
               <td class="text-right nome-faculdade-filter" @click="ordenaNome">Nome da Faculdade <i class="fas fa-chevron-down"></i></td>
             </tr>
-            <tr v-for="(bolsa, index) in bolsasFilter">
+            <tr v-for="bolsa in bolsasFilter">
               <td>
                 <!-- <input type="checkbox" name="" :value="index"> -->
                 <div class="div-check">
@@ -155,11 +155,17 @@ export default {
     },
     filtraCidade(){
       if(this.filtros.cidade!=null){
+        let app = this;
+        this.bolsasFilter = this.bolsasFilter.filter(function(item){
+          if(item['campus']['city'] == app.filtros.cidade){
+            return item
+          }
+        })
         this.cursos = [];
-        for(let x=0;x<this.bolsasFilter.length;x++){
-          if(this.bolsasFilter[x]['campus']['city'] == this.filtros.cidade){
-            this.bolsasFilter.push(this.bolsas[x])
-            this.cursos.push(this.bolsasFilter[x]['course']['name'])
+        for(let x=0;x<app.bolsasFilter.length;x++){
+          let curso = app.bolsasFilter[x]['course']['name']
+          if(!app.cursos.includes(curso)){
+            app.cursos.push(curso)
           }
         }
       }
@@ -168,15 +174,14 @@ export default {
       let c = this.bolsasFilter;
       let app = this;
       if(this.filtros.curso!=null){
-        var a = c.filter(function(item, index){
+        this.bolsasFilter = c.filter(function(item){
           return item['course']['name'] == app.filtros.curso;
         })
-        this.bolsasFilter = a;
       }
     },
     filtraTipo(){
       let app = this;
-      this.bolsasFilter = this.bolsas.filter(function(item, index){
+      this.bolsasFilter = this.bolsas.filter(function(item){
         if(
           item['course']['kind'] == "Presencial" && app.filtros.comoEstudar.presencial == true
         ){
@@ -191,7 +196,7 @@ export default {
     filtraValor(){
       let app = this;
       if(this.filtros.valor>0){
-        this.bolsasFilter = this.bolsasFilter.filter(function(item, index){
+        this.bolsasFilter = this.bolsasFilter.filter(function(item){
           return item['price_with_discount'] <= app.filtros.valor;
         })
       }

@@ -1,35 +1,71 @@
 <template>
 <div class="footer">
   <div class="secundario">
-    <div class="group">
+    <div class="group-contato">
+      <div>
       <i class="fab fa-whatsapp"></i>
       <div>
         <span>0800 123 222</span>
         <span>Seg - Sex 8h-22h</span>
       </div>
     </div>
+    </div>
+    <div class="groups">
     <div class="group">
-      <i class="far fa-comments"></i>
+      <div class="group-icon">
+        <i class="far fa-comments"></i>
+      </div>
+
       <div>
-        <span>Chat ao vivo</span>
-        <span>Seg - Sex 8h-22h</span>
+        <span class="mobile">Chat</span>
+        <span class="full">Chat ao vivo</span>
+        <span class="full">Seg - Sex 8h-22h</span>
       </div>
     </div>
     <div class="group">
+      <div class="group-icon">
+        <i class="far fa-envelope"></i>
+      </div>
+
+      <div>
+        <span class="mobile">E-mail</span>
+        <span class="full">Mande um e-mail</span>
+        <span class="full">Seg - Sex 8h-22h</span>
+      </div>
+    </div>
+    <div class="group">
+      <div class="group-icon">
+        <i class="fas fa-info-circle"></i>
+      </div>
+
+      <div>
+        <span class="mobile">Ajuda</span>
+        <span class="full">Central de ajuda</span>
+        <span class="full">Seg - Sex 8h-22h</span>
+      </div>
+    </div><!--
+    <div class="group">
+      <div class="group-icon">
       <i class="far fa-envelope"></i>
       <div>
-        <span>Mande um e-mail</span>
-        <span>Seg - Sex 8h-22h</span>
+        <span class="mobile">E-mail</span>
+        <span class="full">Mande um e-mail</span>
+        <span class="full">Seg - Sex 8h-22h</span>
       </div>
+    </div>
     </div>
     <div class="group">
-      <i class="fas fa-info-circle"></i>
-      <div>
-        <span>Central de ajuda</span>
-        <span>Seg - Sex 8h-22h</span>
+      <div class="">
+        <i class="fas fa-info-circle"></i>
+        <div>
+          <span class="mobile">Ajuda</span>
+          <span class="full">Central de ajuda</span>
+          <span class="full">Seg - Sex 8h-22h</span>
+        </div>
       </div>
-    </div>
 
+    </div> -->
+  </div>
   </div>
   <div class="principal">
     <span>Feito com <i class="far fa-heart"></i> pela Quero Educação</span>
@@ -60,9 +96,13 @@
 }
 .secundario{
   background-color: #007A8D;
-  height: 70px;
+  padding-top: .6rem;
+  /*height: 70px;*/
   align-items: center;
-  padding: 1.2rem 4rem;
+  /*padding: 1.2rem 4rem;*/
+}
+.full{
+  display: none !important;
 }
 .secundario i{
   font-size: 1.8rem;
@@ -71,16 +111,46 @@
   line-height: 35px;
 }
 .group{
-  display: inline-flex;
-  width: 20%;
+  /*display: inline-flex;*/
+  display: inline-block;
+  width: 25%;
   padding: 15px;
+  border: 1px solid #18ACC4;
+  margin-top: 1.2rem;
 }
-.secundario div div{
+.groups{
   width: 100%;
+}
+.group-contato{
+  display: inline-flex;
+  width: 100%;
+}
+.group-contato div:first-child{
+  margin: 0 auto;
+  width: 50%;
+  max-width: 180px;
+}
+.group-contato i{
+  margin-right: 15px;
+}
+.group-contato div{
+    text-align: left;
 }
 .secundario div div span{
   display: grid;
   text-align: left;
+}
+/* .secundario .group:first-child{
+  width: 100%;
+  margin-left: 25%;
+  display: flex;
+  justify-content: center;
+} */
+.group div:last-child{
+  display: flex;
+}
+.group-icon{
+  display: table;
 }
 .footer{
   color: #FBFBFB;
