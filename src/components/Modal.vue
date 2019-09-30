@@ -395,6 +395,7 @@ table td:first-child, .nome-faculdade-filter{
 .nome-faculdade-filter{
   color: #007A8D;
   font-weight: 600;
+  cursor: pointer;
 }
 .div-imagem{
   text-align: center;
@@ -564,7 +565,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 @media only screen and (min-width: 900px) {
-  .modal{width: 58%; margin-left: 22%;height: 80%; overflow: auto;}
+  .modal{width: 60%; margin-left: 22%;height: 80%; overflow: auto;}
   .fechar{ right: 16%;}
   .group-modal{ display: flex}
   .card{padding: 0 5px;}
@@ -575,10 +576,13 @@ input[type=range]:focus::-ms-fill-upper {
   .checkbox-type .checkbox.select{padding: 1.5px 5px; font-size: 12px;}
   .div-group-check label{margin: 0 0.8rem 0 .5rem;font-size: .9rem;}
   table .checkbox{ top: .3rem;}
-  .modal img{ margin-left: 3vw;}
+  .div-imagem{ margin-right: -26px}
+  .modal img{ margin-left: 2vw;}
   .info-curso{float: left;}
   .info-valor{text-align: right;}
   .curso-nome{font-size: .9rem;}
+  .curso-level{font-size: .8rem;}
+  .curso-valor{ font-size: 1rem;}
   .desconto{font-size: .9rem; margin-left: 4vw}
 }
 </style>
