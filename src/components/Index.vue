@@ -313,10 +313,12 @@ export default {
   .lista-semestre li:first-child{ border-radius: 6px 0 0 6px}
   .lista-semestre li:last-child{ border-radius: 0 6px 6px 0}
   .lista-semestre li{ padding: .4rem 1.2rem; font-size: .8rem;}
-  .btn-adicionar{ width: 280px; height: 200px; padding: 70px 0; float: left; margin: 10px; }
+  .btn-adicionar{ width: 253px; height: 165px; padding: 125px 0; float: left; margin: 10px; }
   .btn-adicionar h4{font-size: 1.2rem;}
   .btn-adicionar span{ font-size: .8rem; }
   .cards{ display: table; padding: 0 3%;}
-  .cards .card-oferta{float:left;margin: 10px}
+  .cards .card-oferta{float:left;margin: 10px; height: 390px;}
+  .oferta-mensalidade-label, .oferta-inicio{font-size: .9rem;}
+  .oferta-btns button{font-size: .9rem; margin: 25px 3px 5px 5px;}
 }
 </style>

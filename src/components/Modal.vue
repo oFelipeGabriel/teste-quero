@@ -4,20 +4,24 @@
     <div class="modal">
       <h2 class="texto">Adicionar bolsa</h2>
       <span class="texto">Filtre e adicione as bolsas de seu interesse.</span>
-      <div class="card cidade">
-        <h4 class="texto">SELECIONE SUA CIDADE</h4>
-        <select class="select-cidade" name="cidade" @change="changeCidade" v-model="filtros.cidade">
-          <option value="null" disabled>Selecione</option>
-          <option v-for="cidade in cidades" :value="cidade">{{cidade}}</option>
-        </select>
+      <div class="group-modal">
+
+        <div class="card cidade">
+          <h4 class="texto">SELECIONE SUA CIDADE</h4>
+          <select class="select-cidade" name="cidade" @change="changeCidade" v-model="filtros.cidade">
+            <option value="null" disabled>Selecione</option>
+            <option v-for="cidade in cidades" :value="cidade">{{cidade}}</option>
+          </select>
+        </div>
+        <div class="card curso">
+          <h4 class="texto">SELECIONE O CURSO DE SUA PREFERÊNCIA</h4>
+          <select class="select-curso" name="curso" @change="filtrar" v-model="filtros.curso">
+            <option value="null" disabled>Selecione</option>
+            <option v-for="(curso) in cursos" :value="curso">{{curso}}</option>
+          </select>
+        </div>
       </div>
-      <div class="card curso">
-        <h4 class="texto">SELECIONE O CURSO DE SUA PREFERÊNCIA</h4>
-        <select class="select-curso" name="curso" @change="filtrar" v-model="filtros.curso">
-          <option value="null" disabled>Selecione</option>
-          <option v-for="(curso) in cursos" :value="curso">{{curso}}</option>
-        </select>
-      </div>
+
       <div class="card como-estudar">
         <h4 class="texto">COMO VOCÊ QUER ESTUDAR:</h4>
         <div class="div-group-check">
@@ -85,10 +89,15 @@
                 </div>
               </td>
               <td>
-                <span class="curso-nome">{{bolsa['course']['name']}}</span>
-                <span class="curso-level">{{bolsa['course']['level']}}</span>
-                <span class="desconto">Bolsa de <span class="valor-desconto">{{bolsa['discount_percentage']}}%</span></span>
-                <span class="curso-valor">R$ {{bolsa['price_with_discount'].toFixed(2).replace('.', ',')}}/mês</span>
+                <div class="info-curso">
+                  <span class="curso-nome">{{bolsa['course']['name']}}</span>
+                  <span class="curso-level">{{bolsa['course']['level']}}</span>
+                </div>
+                <div class="info-valor">
+                  <span class="desconto">Bolsa de <span class="valor-desconto">{{bolsa['discount_percentage']}}%</span></span>
+                  <span class="curso-valor">R$ {{bolsa['price_with_discount'].toFixed(2).replace('.', ',')}}/mês</span>
+                </div>
+
               </td>
             </tr>
           </tbody>
@@ -284,6 +293,7 @@ export default {
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 0;
   background-color: rgba(31, 45, 48, .22);
   width: 100%;
   height: 100%;
@@ -304,6 +314,9 @@ export default {
   padding: 10px 1rem;
   overflow: auto;
   z-index: 999;
+}
+.group-modal{
+  display: grid;
 }
 .text-right{
   text-align: right;
@@ -441,6 +454,9 @@ table .checkbox-selected{
   margin-bottom: .4rem;
   font-size: 1.2rem;
 }
+.info-valor{
+  text-align: left;
+}
 .valor-desconto, .curso-valor{
   color: #0FA866;
   font-weight: 800;
@@ -545,5 +561,24 @@ input[type=range]:focus::-ms-fill-lower {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #18ACC4;
+}
+
+@media only screen and (min-width: 900px) {
+  .modal{width: 58%; margin-left: 22%;height: 80%; overflow: auto;}
+  .fechar{ right: 16%;}
+  .group-modal{ display: flex}
+  .card{padding: 0 5px;}
+  .card h4{font-size: .6rem}
+  select{width: 100%;}
+  .div-group-check{margin-bottom: 1.5rem;}
+  .checkbox-type .checkbox-selected{padding: 3px 2px 1px 3px;}
+  .checkbox-type .checkbox.select{padding: 1.5px 5px; font-size: 12px;}
+  .div-group-check label{margin: 0 0.8rem 0 .5rem;font-size: .9rem;}
+  table .checkbox{ top: .3rem;}
+  .modal img{ margin-left: 3vw;}
+  .info-curso{float: left;}
+  .info-valor{text-align: right;}
+  .curso-nome{font-size: .9rem;}
+  .desconto{font-size: .9rem; margin-left: 4vw}
 }
 </style>
