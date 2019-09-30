@@ -2,6 +2,10 @@
 ### Projeto para primeira etapa de seleção da empresa Quero Educação
 ![Node version](https://img.shields.io/badge/Node-^10.x-green)
 ![Vue.js version](https://img.shields.io/badge/Vue.js-^2.6.10-green)
+
+## Online in:
+https://teste-quero.herokuapp.com
+
 ## Clone project
 ```
 git clone https://github.com/oFelipeGabriel/teste-quero.git
