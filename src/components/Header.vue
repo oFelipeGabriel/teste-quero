@@ -108,7 +108,7 @@ export default{
     min-width: 150px !important;
   }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
 
   .span-como-funciona{
     display: none;
@@ -119,8 +119,13 @@ export default{
   .como-funciona i, .user i{
     font-size: 1.8rem;
   }
+  .como-funciona{
+    width: 15%;
+    padding: 0 5%;
+  }
   .user{
     width: 15%;
+    padding: 0 5%;
     border-left: 2px solid rgba(31, 45, 48,0.2);
   }
   .user i{

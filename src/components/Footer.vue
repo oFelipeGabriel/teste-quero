@@ -101,9 +101,6 @@
   align-items: center;
   /*padding: 1.2rem 4rem;*/
 }
-.full{
-  display: none !important;
-}
 .secundario i{
   font-size: 1.8rem;
   float: left;
@@ -143,8 +140,10 @@
 .group-contato span{
   text-align: left !important;
 }
-.secundario div div span{
+.group-contato div div{
   display: grid;
+}
+.secundario div div span{
   text-align: center;
   width: 100%;
 }
@@ -167,5 +166,20 @@
 .footer{
   color: #FBFBFB;
   font-weight: 600
+}
+
+.full{
+  display: none;
+}
+@media only screen and (min-width: 900px) {
+  .secundario{ display: flex;}
+  .group-contato{flex: 1;width: 25%;}
+  .groups{width:75%; margin-top: -2%;}
+  .group{display: flex; border: none}
+  .group-contato div:first-child, .secundario i{width: auto;}
+  .group .mobile{display: none}
+  .group .full{display: block; text-align: left;}
+  .group-icon{width: auto;}
+  .group div:last-child{display: grid;text-align: left;}
 }
 </style>
